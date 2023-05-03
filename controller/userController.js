@@ -32,21 +32,21 @@ exports.registerUser = async (req, res, next) => {
 
 exports.loginUser = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user)
-      return res.json({ msg: "Incorrect username or password", status: false });
+      return res.json({ msg: "Incorrect credentials ", status: false });
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword)
-      return res.json({ msg: "Incorrect username or password", status: false });
+      return res.json({ msg: "Incorrect credentials  ", status: false });
 
     return res.json({
       status: true,
       user: {
-        username,
+        username: user.username,
         email: user.email,
         _id: user._id,
       },
