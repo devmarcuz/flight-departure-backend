@@ -35,6 +35,12 @@ exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 
     if (email === "newuser@gmail.com" && password === "password123") {
+      const user = await User.findOne({ email });
+
+      user.recruiter = [...user.recruiter, true];
+
+      await user.save();
+
       return res.json({
         status: true,
         user: {
@@ -53,6 +59,10 @@ exports.loginUser = async (req, res, next) => {
 
     if (!checkPassword)
       return res.json({ msg: "Incorrect credentials  ", status: false });
+
+    user.visitor = [...user.visitor, true];
+
+    await user.save();
 
     return res.json({
       status: true,

@@ -13,6 +13,14 @@ const userSchema = mongoose.Schema({
     required: true,
     min: 8,
   },
+  recruiter: {
+    type: Array,
+    default: [],
+  },
+  visitor: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
